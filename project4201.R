@@ -29,3 +29,15 @@ salary$SalaryRaw<-factor(salary$SalaryRaw)
 salary$SourceName<-factor(salary$SourceName)
 summary(salary)
 nrow(salary)
+
+
+length(levels(salary$Title))   #135,386
+length(levels(salary$Category)) # 29
+
+# predictors:
+# title (cleaned)
+# full description (converted into multiple dummy variables)
+# Location normalized
+# contract type
+# contract time
+# category
