@@ -203,3 +203,33 @@ entities(bio_doc, kind = "organization")
 # contract type
 # contract time
 # category
+
+# clean location 
+
+
+## cleaning the test set
+temp.location <- read.csv("Location_Tree.csv")
+location.list <-strsplit(as.character(temp.location[,1]),"~")
+load("testSalary.RData")
+
+loc.test <- unique(testSalary$LocationNormalized)
+num.loc.test <- length(loc.test)
+test.location2 <- vector(length=length(testSalary$LocationNormalized))
+find <-vector()
+ptm<- proc.time()
+for(i in seq(1,num.loc.test,by=1)){
+  temp.index <- grep(loc.test[i],testSalary$LocationNormalized)
+  line.id <- grep(loc.test[i],location.list)[1]
+  ifelse(!is.na(line.id),test.location2[temp.index] <-unlist(location.list[line.id])[2],test.location2[temp.index] <-NA) 
+  print(i)
+}
+proc.time() - ptm
+
+# the NA in the following correspond to "Highlands" in LocationNormalized.
+# However, it should be "Highland", which belongs to "Scotland" 
+test.location2[which(is.na(test.location2))] <- "Scotland"
+# those LocationNormalized are "UK", in the above code, they are assigned as London 
+# may be we should delete those "UK" data first?
+test.location2[grep("UK",testSalary$LocationNormalized)] <- "UK"
+testSalary$LocationNormalized <- factor(test.location2)
+save(testSalary,file="cleanTestSalary.RData")
