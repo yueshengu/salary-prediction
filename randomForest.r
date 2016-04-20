@@ -9,7 +9,7 @@ ntrees.calc <- function(ntrees,max.nodes,train.data,test.data){
 
 
 
-ntrees <- 200
+ntrees <- 500
 
 max.nodes <- seq(6000,11000,by=1000)
 
