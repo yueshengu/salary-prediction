@@ -50,7 +50,7 @@ for (n.nodes in max.nodes){
 rownames(train.matrix) <- c("3 Folds","5 Folds")
 colnames(train.matrix) <- c("7000Nodes","8000Nodes","9000Nodes","10000Nodes","11000Nodes")
 
-rf.model <- randomForest(scaleLogSalary~.,ntree=200,data=train.data,maxnodes=10000,importance=T,proximity=T,keep.forest=T,mtry=mtrys)
-  predict <- predict(rf,newdata=test.data)
-  mse.test <- mean((test.data$scaleLogSalary-predict)^2)
+rf.model <- randomForest(scaleLogSalary~.,ntree=200,data=train.data,maxnodes=10000,
+importance=T,proximity=T,keep.forest=T,mtry=mtrys,xtest=test.data[,-238],ytest=test.data[,238])
+
 
